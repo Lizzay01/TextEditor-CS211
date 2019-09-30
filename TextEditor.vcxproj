@@ -125,7 +125,9 @@
   <ItemGroup>
     <ClInclude Include="curses.h" />
     <ClInclude Include="curspriv.h" />
+    <ClInclude Include="keyInputs.h" />
     <ClInclude Include="panel.h" />
+    <ClInclude Include="textBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="pdcurses.dll" />
@@ -135,7 +137,9 @@
     <Library Include="pdcurses.lib" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="keyInputs.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="textBuffer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
