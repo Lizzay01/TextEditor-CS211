@@ -246,7 +246,6 @@ void keyInputs::printStatusLine()
 	attroff(A_REVERSE);
 
 	// manipulate in order to display the file
-	//f.open(filename);
 
 }
 

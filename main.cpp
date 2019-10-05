@@ -4,7 +4,9 @@
 #include "curspriv.h"
 #include "keyInputs.h"
 #include "textBuffer.h"
+#include "Trie.h"
 #include <string>
+#include <iostream>
 #include <algorithm>
 
 using namespace std;
@@ -20,7 +22,8 @@ void curses_init()
 int main(int argc, char* argv[])
 {
 	/*******************************************************
-						  TESTING (work in progress)
+						  TESTING 
+				     (work in progress)
 	*********************************************************/
 	/*
 	char message[] = "Enter a string: ";
@@ -31,6 +34,20 @@ int main(int argc, char* argv[])
 	getstr(str);
 	mvprintw(LINES - 2, 0, "You Entered: %s", str);
 	*/
+
+	Trie dictionary{};
+
+	string line = "";
+	dictionary.addWord("abc");
+	dictionary.addWord("aabc");
+	dictionary.addWord("def");
+	vector<string> result = dictionary.search("a");
+
+	//expected result:  "abc", "aabc"
+	for (auto item : result)
+	{
+		cout << item << endl;
+	}
 
 	/*******************************************************
 					  END OF TESTING

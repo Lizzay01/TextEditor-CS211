@@ -20,7 +20,7 @@ public:
 	void removeLine(int);
 
 	// substitutes all tabs in string for 4 spaces,
-	// so that the tabs won't screw everything up
+	// so that the tabs won't mess everything up
 	string removeTabs(string);
 };
 

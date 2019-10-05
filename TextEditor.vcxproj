@@ -128,6 +128,8 @@
     <ClInclude Include="keyInputs.h" />
     <ClInclude Include="panel.h" />
     <ClInclude Include="textBuffer.h" />
+    <ClInclude Include="Trie.h" />
+    <ClInclude Include="TrieNode.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="pdcurses.dll" />
@@ -140,6 +142,9 @@
     <ClCompile Include="keyInputs.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="textBuffer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="keywords.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
