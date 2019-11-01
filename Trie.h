@@ -41,6 +41,7 @@ public:
 		}
     }
 
+
 	//TODO: implement
     vector<string> search(const string &word)
     {
@@ -52,11 +53,14 @@ public:
 			char searchWord = word[j];
 			searchingChar = searchingChar->getChild(searchWord);
 		}
-	
+		
 		//recursive pre-order walk of tree
-		cout << searchingChar->getValue() << endl;
+		cout << searchingChar->getValue() << endl; 
+		
+		// when switching to _root it gets the first child
 		for (auto child : searchingChar->getChildren())
 		{
+			//when using _root second child returns bunch of zeros
 			cout << child.first << " " << child.second << endl;
 		}
         return matches;
