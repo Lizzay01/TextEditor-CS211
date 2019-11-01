@@ -50,15 +50,15 @@ public:
 		for (int j = 0; j < word.length(); j++)
 		{
 			char searchWord = word[j];
-			for (auto keys : searchingChar->getChildren())
-			{
-				if (searchWord == keys.first)
-				{
-					matches.push_back(searchWord);
-				}
-			}
+			searchingChar = searchingChar->getChild(searchWord);
 		}
-		
+	
+		//recursive pre-order walk of tree
+		cout << searchingChar->getValue() << endl;
+		for (auto child : searchingChar->getChildren())
+		{
+			cout << child.first << " " << child.second << endl;
+		}
         return matches;
     }
 };
