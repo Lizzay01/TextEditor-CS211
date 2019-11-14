@@ -1,80 +1,67 @@
-//#define _CRT_SECURE_NO_WARNINGS
+#define PDC_DLL_BUILD 1
 #include "curses.h"
 #include "panel.h"
 #include "curspriv.h"
 #include "keyInputs.h"
-#include "textBuffer.h"
-#include "Trie.h"
+//#include "textBuffer.h"
 #include <string>
-#include <iostream>
+#include <cstdlib>
 #include <algorithm>
+
 
 using namespace std;
 
 void curses_init()
 {
+	/*******************************************************
+					  Terminal Window
+	*********************************************************/
+	WINDOW* main_window = nullptr;
+	/*int num_cols = 0;
+	int num_rows = 0;*/
+
+	//initializing our window
+	//main_window = initscr();
+	//resize_term(5000, 5000); <-- gets full screen
+	//resize window
+	//getmaxyx(main_window, num_rows, num_cols);
+	//resize_term(num_rows - 1, num_cols - 1);
+	//getmaxyx(main_window, num_rows, num_cols);
+
 	initscr(); //initializing window
 	noecho(); //don't echo keys
 	cbreak(); //disable line buffering
 	keypad(stdscr, true);
+	//scrollok(main_window, TRUE);
 }
+
+string fn = "";
 
 int main(int argc, char* argv[])
 {
-	/*******************************************************
-						  TESTING 
-				     (work in progress)
-	*********************************************************/
-	/*
-	char message[] = "Enter a string: ";
-	char str[80];
-	int row, col;
-	getmaxyx(stdscr, row, col);
-	mvprintw(row / 2, (col - strlen(message)) / 2, "%s", message);
-	getstr(str);
-	mvprintw(LINES - 2, 0, "You Entered: %s", str);
-	*/
-
-	Trie dictionary{};
-
-	string line = "";
-	dictionary.addWord("abc");
-	dictionary.addWord("aabc");
-	dictionary.addWord("def");
-	vector<string> result = dictionary.search("a");
-
-	//expected result:  "abc", "aabc"
-	for (auto item : result)
-	{
-		cout << item << endl;
-	}
-
-	/*******************************************************
-					  END OF TESTING
-	*********************************************************/
-
-	/*******************************************************
-					  Terminal Window
-	*********************************************************/
-
-	string fn = "";
+	/*----------------------------------------------------------------------*
+	*                     MAIN PROGRAM LOGIC GOES HERE						*
+	* ----------------------------------------------------------------------*/	
+	
 	keyInputs key;
-
+	//initializing filename
 	if (argc > 1)
 	{
-		fn = argv[1]; //set the filename
+		
+		fn = string(argv[1]); 
 		key = keyInputs(fn);
 	}
 	else
 	{
 		key = keyInputs();
 	}
-
-	curses_init();  //initializing curses
+	
+	curses_init();
 
 	while (key.getMode() != 'x') // exit mode
 	{
-		key.updateStatus();
+		if (key.upStatus)
+			key.updateStatus();
 		key.printStatusLine();
 		key.printBuff();
 		int input = getch();	//blocking until input
@@ -84,8 +71,9 @@ int main(int argc, char* argv[])
 	//refresh tells curses to draw everything
 	refresh();
 
-	//END OF PROGRAM
+	/*----------------------------------------------------------------------*
+	*                         END OF PROGRAM								*
+	* ----------------------------------------------------------------------*/
 	getch();
 	endwin();
-
 }

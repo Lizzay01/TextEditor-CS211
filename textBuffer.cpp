@@ -4,7 +4,7 @@ textBuffer::textBuffer() {}
 
 string textBuffer::removeTabs(string line)
 {
-	int tab = line.find("\t");
+	int tab = line.find("\t"); // warning: possible loss of data
 	if (tab == line.npos)
 	{
 		return line;
