@@ -309,10 +309,6 @@ void keyInputs::printStatusLine()
 	if (raiseflag)
 		attroff(A_BOLD);
 	attroff(A_REVERSE);
-
-	// manipulate in order to display the file
-	//f.open(filename);
-
 }
 
 void keyInputs::saveFile()
