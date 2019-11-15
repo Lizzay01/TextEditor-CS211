@@ -79,6 +79,17 @@ void recordFrequency(string text)
 	{
 		string grab_word;
 		getline(input, grab_word, ' ');
+		if (grab_word == " ")
+		{
+			continue;
+		}
+		for (auto ch : grab_word)
+		{
+			if (ch == '\n')
+			{
+				grab_word = grab_word.substr(0, grab_word.length()-1);
+			}
+		}
 		words.push_back(grab_word);
 	}
 	input.close();
@@ -130,10 +141,32 @@ void recordFrequency(string text)
 	{
 		string words;
 		getline(input, words, ' ');
+		if (words == " ")
+		{
+			continue;
+		}
+		for (auto ch : words)
+		{
+			if (ch == '\n')
+			{
+				words = words.substr(0, words.length() - 1);
+			}
+		}
 		for (auto bvalues : frqt)
 		{
-			output << frqt[words] + " ";
+			output << frqt[words] << " ";
 		}
+	}
+	output.close();
+	input.close();
+
+	input.open(text);
+	output.open(codesFile);
+	string wordss;
+	for (auto otherValues : frqt)
+	{
+		output << otherValues.first << ": "
+			<< otherValues.second << "\n";
 	}
 	output.close();
 	input.close();
@@ -176,7 +209,9 @@ int main(int argc, char* argv[])
 		key.handleInput(input);
 	}
 
-	//refresh tells curses to draw everything
+	//recordFrequency("happy.txt"); //milestone 6
+	
+								  //refresh tells curses to draw everything
 	refresh();
 
 	/*----------------------------------------------------------------------*
