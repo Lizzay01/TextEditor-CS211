@@ -1,5 +1,8 @@
 # Text Editor
 
-* [Milestone #1](milestone1.md)
-* [Milestone #2](milestone2.md)
-* [Milestone #3](milestone3.md)
+* [Milestone #1](designDiary.pdf)
+* [Milestone #2](designDiary2.pdf)
+* [Milestone #3](designDiary3.pdf)
+* [Milestone #4]
+* [Milestone #5](designDiary5.pdf)
+* [Milestone #6]
