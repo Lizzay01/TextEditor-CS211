@@ -41,7 +41,9 @@ void curses_init()
 	//scrollok(main_window, TRUE);
 }
 
-
+/*******************************************************
+					 Milestone 6
+*********************************************************/
 string generateBin(int n)
 {
 	int power = 1;
@@ -136,6 +138,9 @@ void recordFrequency(string text)
 	output.close();
 	input.close();
 }
+/*******************************************************
+					 Milestone 6 - END
+*********************************************************/
 
 string fn = "";
 
@@ -144,7 +149,7 @@ int main(int argc, char* argv[])
 	/*----------------------------------------------------------------------*
 	*                     MAIN PROGRAM LOGIC GOES HERE						*
 	* ----------------------------------------------------------------------*/	
-	//recordFrequency("happy.txt");
+
 	keyInputs key;
 	//initializing filename
 	if (argc > 1)
@@ -159,6 +164,7 @@ int main(int argc, char* argv[])
 	}
 	
 	curses_init();
+	recordFrequency("happy.txt"); //milestone 6
 
 	while (key.getMode() != 'x') // exit mode
 	{
