@@ -175,6 +175,62 @@ void recordFrequency(string text)
 					 Milestone 6 - END
 *********************************************************/
 
+
+/*******************************************************
+					 Milestone 7
+*********************************************************/
+//sorting options: INSERTION, SELECTION, BUBBLE, AND QUICK SORT 
+
+//void bubbleSort(int* numbers, int size)
+//{
+//	for (int i = 0; i < size - 1; i++)
+//	{
+//		for (int j = 0; j < size - i - 1; j++)
+//		{
+//			if (numbers[j] > numbers[j + 1])
+//			{
+//				int temp = numbers[j];
+//				numbers[j] = numbers[j + 1];
+//				numbers[j + 1] = temp;
+//			}
+//		}
+//	}
+//}
+
+//void sortingOptions()
+//{
+//	//int size;
+//	//vector<int> nums;
+//
+//	int select;
+//	cout << "Sorting Options Menu" << endl;
+//	cin >> select;
+//	if (select == 1)
+//	{
+//		//bubbleSort(nums, size);
+//	}
+//	else if (select == 2)
+//	{
+//		//insertionSort();
+//	}
+//	else if (select == 3)
+//	{
+//		//selectionSort();
+//	}
+//	else if (select == 4)
+//	{
+//		//quickSort();
+//	}
+//	else
+//	{
+//		cout << "Exiting Program" << endl;
+//		exit(0);
+//	}
+//}
+/*******************************************************
+					 Milestone 7 - END
+*********************************************************/
+
 string fn = "";
 
 int main(int argc, char* argv[])
@@ -211,7 +267,7 @@ int main(int argc, char* argv[])
 
 	//recordFrequency("happy.txt"); //milestone 6
 	
-								  //refresh tells curses to draw everything
+    //refresh tells curses to draw everything
 	refresh();
 
 	/*----------------------------------------------------------------------*

@@ -1,10 +1,9 @@
 /*----------------------------------------------------------------------*
  *                              PDCurses                                *
  *----------------------------------------------------------------------*/
-
+#define PDC_DLL_BUILD 1
 #ifndef __PDCURSES__
 #define __PDCURSES__ 1
-#define PDC_DLL_BUILD 1
 
 /*man-start**************************************************************
 
@@ -28,27 +27,22 @@ Defined by this header:
 
 **man-end****************************************************************/
 
-#define PDCURSES        1
-#define PDC_BUILD    3900
+#define PDCURSES        1      /* PDCurses-only routines */
+#define PDC_BUILD    3801
 #define PDC_VER_MAJOR   3
-#define PDC_VER_MINOR   9
-#define PDC_VERDOT   "3.9"
-
+#define PDC_VER_MINOR   8
+#define PDC_VERDOT   "3.8"
 #define CHTYPE_LONG     1      /* chtype >= 32 bits */
 
 #if defined(__STDC_VERSION__) && __STDC_VERSION__ >= 199901L
 # define PDC_99         1
 #endif
 
-#if defined(__cplusplus) && __cplusplus >= 199711L
-# define PDC_PP98       1
-#endif
-
 /*----------------------------------------------------------------------*/
 
 #include <stdarg.h>
 #include <stddef.h>
-#include <stdio.h>
+#include <stdio.h>             /* Required by X/Open usage below */
 
 #ifdef PDC_WIDE
 # include <wchar.h>
@@ -61,9 +55,7 @@ Defined by this header:
 #ifdef __cplusplus
 extern "C"
 {
-# ifndef PDC_PP98
-#  define bool _bool
-# endif
+# define bool _bool
 #endif
 
 /*----------------------------------------------------------------------
@@ -84,7 +76,7 @@ extern "C"
 #undef OK
 #define OK 0
 
-#if !defined(PDC_PP98) && !defined(__bool_true_false_are_defined)
+#ifndef __bool_true_false_are_defined
 typedef unsigned char bool;
 #endif
 
@@ -130,7 +122,7 @@ enum
 
 /*----------------------------------------------------------------------
  *
- *  Mouse Interface
+ *  Mouse Interface -- SYSVR4, with extensions
  *
  */
 
@@ -316,7 +308,7 @@ typedef struct
     bool  raw_out;        /* raw output mode (7 v. 8 bits) */
     bool  audible;        /* FALSE if the bell is visual */
     bool  mono;           /* TRUE if current screen is mono */
-    bool  resized;        /* TRUE if TERM has been resized */
+    short resized;        /* TRUE if TERM has been resized */
     bool  orig_attr;      /* TRUE if we have the original colors */
     short orig_fore;      /* original screen foreground color */
     short orig_back;      /* original screen foreground color */
@@ -341,14 +333,14 @@ typedef struct
                                       to be preserved */
     int   _restore;                /* specifies if screen background
                                       to be restored, and how */
-    unsigned long key_modifiers;   /* key modifiers (SHIFT, CONTROL, etc.)
-                                      on last key press */
+    bool  save_key_modifiers;      /* TRUE if each key modifiers saved
+                                      with each key press */
     bool  return_key_modifiers;    /* TRUE if modifier keys are
                                       returned as "real" keys */
     bool  key_code;                /* TRUE if last key is a special key;
                                       used internally by get_wch() */
-    MOUSE_STATUS mouse_status;     /* last returned mouse status */
 #ifdef XCURSES
+    int   XcurscrSize;    /* size of Xcurscr shared memory block */
     bool  sb_on;
     int   sb_viewport_y;
     int   sb_viewport_x;
@@ -359,12 +351,6 @@ typedef struct
 #endif
     short line_color;     /* color of line attributes - default -1 */
     attr_t termattrs;     /* attribute capabilities */
-    WINDOW *lastscr;      /* the last screen image */
-    FILE *dbfp;           /* debug trace file pointer */
-    bool  color_started;  /* TRUE after start_color() */
-    bool  dirty;          /* redraw on napms() after init_color() */
-    int   sel_start;      /* start of selection (y * COLS + x) */
-    int   sel_end;        /* end of selection */
 } SCREEN;
 
 /*----------------------------------------------------------------------
@@ -1279,14 +1265,9 @@ PDCEX  mmask_t getmouse(void);
 PDCEX  int     assume_default_colors(int, int);
 PDCEX  const char *curses_version(void);
 PDCEX  bool    has_key(int);
-PDCEX  bool    is_keypad(const WINDOW *);
-PDCEX  bool    is_leaveok(const WINDOW *);
-PDCEX  bool    is_pad(const WINDOW *);
-PDCEX  int     set_tabsize(int);
 PDCEX  int     use_default_colors(void);
 PDCEX  int     wresize(WINDOW *, int, int);
 
-PDCEX  bool    has_mouse(void);
 PDCEX  int     mouseinterval(int);
 PDCEX  mmask_t mousemask(mmask_t, mmask_t *);
 PDCEX  bool    mouse_trafo(int *, int *, bool);
@@ -1335,6 +1316,7 @@ PDCEX  int     PDC_setclipboard(const char *, long);
 PDCEX  unsigned long PDC_get_input_fd(void);
 PDCEX  unsigned long PDC_get_key_modifiers(void);
 PDCEX  int     PDC_return_key_modifiers(bool);
+PDCEX  int     PDC_save_key_modifiers(bool);
 
 #ifdef XCURSES
 PDCEX  WINDOW *Xinitscr(int, char **);
@@ -1346,14 +1328,6 @@ PDCEX  int     sb_get_horz(int *, int *, int *);
 PDCEX  int     sb_get_vert(int *, int *, int *);
 PDCEX  int     sb_refresh(void);
 #endif
-
-/* NetBSD */
-
-PDCEX  int     touchoverlap(const WINDOW *, WINDOW *);
-PDCEX  int     underend(void);
-PDCEX  int     underscore(void);
-PDCEX  int     wunderend(WINDOW *);
-PDCEX  int     wunderscore(WINDOW *);
 
 /*** Functions defined as macros ***/
 
@@ -1379,10 +1353,6 @@ PDCEX  int     wunderscore(WINDOW *);
 # define getmouse(x) nc_getmouse(x)
 #endif
 
-/* Deprecated */
-
-#define PDC_save_key_modifiers(x)  (OK)
-
 /* return codes from PDC_getclipboard() and PDC_setclipboard() calls */
 
 #define PDC_CLIP_SUCCESS         0
@@ -1398,9 +1368,7 @@ PDCEX  int     wunderscore(WINDOW *);
 #define PDC_KEY_MODIFIER_NUMLOCK 8
 
 #ifdef __cplusplus
-# ifndef PDC_PP98
-#  undef bool
-# endif
+# undef bool
 }
 #endif
 

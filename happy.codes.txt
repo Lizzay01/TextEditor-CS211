@@ -1,5 +1,3 @@
-berries: 0
-apples: 1
-apples
-: 11
+apples: 0
+berries: 1
 pears: 10
